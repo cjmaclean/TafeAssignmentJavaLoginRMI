@@ -43,6 +43,15 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Server implements Hello, Session {
 
+    private void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+        setAdmin(isAdmin() && loggedIn);
+    }
+
+    private void setAdmin(boolean admin) {
+        this.admin = admin && loggedIn;
+    }
+
     public Server() {}
 
 	@Override
@@ -50,25 +59,48 @@ public class Server implements Hello, Session {
         return "Hello, world!";
     }
     
+    private boolean loggedIn = false;
+    private boolean admin = false;
+    // admin is always false when loggedIn == false. setAdmin and setLoggedIn
+    // maintain this property.
+    private String sessionUsername = "";
+        
     // Session methods
     @Override
     public boolean login(String username, String password) {
-        return false;
+        if ("admin".equals(username) && "password".equals(password)) {
+            setLoggedIn(true);
+            setAdmin(true);
+            sessionUsername = username;
+        } else if ("fred".equals(username) && "fred".equals(password)) {
+            setLoggedIn(true);
+            setAdmin(false);
+            sessionUsername = username;
+        } else {
+            setLoggedIn(false);
+        }
+        return loggedIn;
     }
     
     @Override
     public boolean isLoggedIn() {
-        return false;
+        return loggedIn;
     }
     
     @Override
     public boolean isAdmin() {
-        return false;
-    }
+        return admin;
+    }  
     @Override
     public String getMessage() {
-        return "Not supported yet. Later it will depend on whether you are admin";
-    }
+        if(!loggedIn) {
+            return "Access denied";
+        } else if (admin) {
+            return "Welcome to the server. You may create more accounts.";
+        } else {
+            return "Hello" + sessionUsername + ". Welcome to the server.";
+        }
+    } 
     @Override
     public String createLogin(String username, String password) {
         return "failed, not supported yet";
