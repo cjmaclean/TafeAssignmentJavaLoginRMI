@@ -1,3 +1,4 @@
+
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -11,6 +12,12 @@ import java.rmi.server.UnicastRemoteObject;
 public class Server implements Hello, Session {
 
     UserTable users = new UserTable();
+
+    private boolean loggedIn = false;
+    private boolean admin = false;
+    // admin is always false when loggedIn == false. setAdmin and setLoggedIn
+    // maintain this property.
+    private String sessionUsername = "";
 
     public Server() {
         users.addUserToTable("fred", "ffff");
@@ -30,12 +37,6 @@ public class Server implements Hello, Session {
     public String sayHello() {
         return "Hello, world!";
     }
-
-    private boolean loggedIn = false;
-    private boolean admin = false;
-    // admin is always false when loggedIn == false. setAdmin and setLoggedIn
-    // maintain this property.
-    private String sessionUsername = "";
 
     // Session methods
     @Override
@@ -63,9 +64,10 @@ public class Server implements Hello, Session {
     public boolean isAdmin() {
         return admin;
     }
+
     @Override
     public String getMessage() {
-        if(!loggedIn) {
+        if (!loggedIn) {
             return "Access denied";
         } else if (admin) {
             return "Welcome to the server. You may create more accounts.";
@@ -73,6 +75,7 @@ public class Server implements Hello, Session {
             return "Hello" + sessionUsername + ". Welcome to the server.";
         }
     }
+
     @Override
     public String createLogin(String username, String password) {
         return "failed, not supported yet";
