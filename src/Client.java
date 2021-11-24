@@ -53,7 +53,14 @@ public class Client {
                         Session sessionStub = (Session) registry.lookup("Session");
 			String response = sessionStub.getMessage();
 			System.out.println("response: " + response);
-		} catch (RemoteException | NotBoundException e) {
+                        sessionStub.login("admin","password");
+			response = sessionStub.getMessage();
+			System.out.println("response: " + response);
+                        sessionStub.login("fred","fred");
+			response = sessionStub.getMessage();
+			System.out.println("response: " + response);
+                
+                } catch (RemoteException | NotBoundException e) {
 			System.err.println("Client exception: " + e.toString());
 		}
 	}
