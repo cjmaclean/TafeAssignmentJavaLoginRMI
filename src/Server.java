@@ -78,7 +78,12 @@ public class Server implements Hello, Session {
 
     @Override
     public String createLogin(String username, String password) {
-        return "failed, not supported yet";
+        if (isAdmin()) {
+            users.addUserToTable(username, password);
+            return "user added: " + username;
+        } else {
+            return "failed, not authorised";
+        }
     }
 
     public static void main(String args[]) {
