@@ -41,14 +41,10 @@ public class Server implements Hello, Session {
     // Session methods
     @Override
     public boolean login(String username, String password) {
-        if ("admin".equals(username) && "password".equals(password)) {
+        if (users.passwordCorrect(username, password)) {
             setLoggedIn(true);
-            setAdmin(true);
             sessionUsername = username;
-        } else if ("fred".equals(username) && "fred".equals(password)) {
-            setLoggedIn(true);
-            setAdmin(false);
-            sessionUsername = username;
+            setAdmin("admin".equals(username));
         } else {
             setLoggedIn(false);
         }

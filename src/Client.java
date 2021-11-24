@@ -53,10 +53,10 @@ public class Client {
             Session sessionStub = (Session) registry.lookup("Session");
             String response = sessionStub.getMessage();
             System.out.println("response: " + response);
-            sessionStub.login("admin", "password");
+            sessionStub.login("admin", "admin");
             response = sessionStub.getMessage();
             System.out.println("response: " + response);
-            sessionStub.login("fred", "fred");
+            sessionStub.login("fred", "ffff");
             response = sessionStub.getMessage();
             System.out.println("response: " + response);
 
