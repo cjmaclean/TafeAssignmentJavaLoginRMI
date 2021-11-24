@@ -41,7 +41,7 @@ import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class Server implements Hello {
+public class Server implements Hello, Session {
 
     public Server() {}
 
@@ -49,16 +49,40 @@ public class Server implements Hello {
     public String sayHello() {
         return "Hello, world!";
     }
-
+    
+    // Session methods
+    @Override
+    public boolean login(String username, String password) {
+        return false;
+    }
+    
+    @Override
+    public boolean isLoggedIn() {
+        return false;
+    }
+    
+    @Override
+    public boolean isAdmin() {
+        return false;
+    }
+    @Override
+    public String getMessage() {
+        return "Not supported yet. Later it will depend on whether you are admin";
+    }
+    @Override
+    public String createLogin(String username, String password) {
+        return "failed, not supported yet";
+    }
+    
     public static void main(String args[]) {
 
         try {
             Server obj = new Server();
-            Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
+            Session sessionStub = (Session) UnicastRemoteObject.exportObject(obj, 0);
 
             // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.getRegistry();
-            registry.bind("Hello", stub);
+            registry.bind("Session", sessionStub);
 
             System.err.println("Server ready");
         } catch (RemoteException | AlreadyBoundException e) {
