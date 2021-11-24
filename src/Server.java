@@ -72,7 +72,7 @@ public class Server implements Hello, Session {
         } else if (admin) {
             return "Welcome to the server. You may create more accounts.";
         } else {
-            return "Hello" + sessionUsername + ". Welcome to the server.";
+            return "Hello " + sessionUsername + ". Welcome to the server.";
         }
     }
 
