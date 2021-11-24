@@ -11,6 +11,15 @@ public class UserTable {
 
     private HashMap<String, User> usersByName = new HashMap<>();
 
+    public UserTable() {
+        try {
+            PasswordUtilities.initPasswordUtilities();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            // Shouldn't fail, but if it does, there's not much we can do
+            System.out.println("Unexpected exception - cannot initialise PasswordUtilities");
+        }
+    }
+
     public boolean passwordCorrect(String user, String passwordIn) {
         User foundUser = usersByName.get(user);
         // null if not found, which needs to be checked for
