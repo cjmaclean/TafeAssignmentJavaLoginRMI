@@ -1,3 +1,4 @@
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -46,10 +47,9 @@ public class PasswordUtilities {
 
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-        
+
         // hash can be computed using the salt and iterations stored in the User,
         // so set up the rest of the User, then the hash.
-        
         User newUser = new User();
         newUser.userName = userName;
         newUser.salt = salt;

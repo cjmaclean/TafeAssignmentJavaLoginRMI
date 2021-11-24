@@ -42,26 +42,26 @@ import java.rmi.registry.Registry;
 
 public class Client {
 
-	private Client() {
-	}
+    private Client() {
+    }
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		String host = (args.length < 1) ? null : args[0];
-		try {
-			Registry registry = LocateRegistry.getRegistry(host);
-                        Session sessionStub = (Session) registry.lookup("Session");
-			String response = sessionStub.getMessage();
-			System.out.println("response: " + response);
-                        sessionStub.login("admin","password");
-			response = sessionStub.getMessage();
-			System.out.println("response: " + response);
-                        sessionStub.login("fred","fred");
-			response = sessionStub.getMessage();
-			System.out.println("response: " + response);
-                
-                } catch (RemoteException | NotBoundException e) {
-			System.err.println("Client exception: " + e.toString());
-		}
-	}
+        String host = (args.length < 1) ? null : args[0];
+        try {
+            Registry registry = LocateRegistry.getRegistry(host);
+            Session sessionStub = (Session) registry.lookup("Session");
+            String response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+            sessionStub.login("admin", "password");
+            response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+            sessionStub.login("fred", "fred");
+            response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+
+        } catch (RemoteException | NotBoundException e) {
+            System.err.println("Client exception: " + e.toString());
+        }
+    }
 }
