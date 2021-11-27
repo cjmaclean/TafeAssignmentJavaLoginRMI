@@ -54,11 +54,11 @@ public class SessionImplementation implements Session {
     @Override
     public String getMessage() {
         if (!loggedIn) {
-            return "Access denied";
+            return server.getLoggedOutMessage();
         } else if (admin) {
-            return "Welcome to the server. You may create more accounts.";
+            return server.getAdminMessage();
         } else {
-            return "Hello " + sessionUsername + ". Welcome to the server.";
+            return server.getUserMessage(sessionUsername);
         }
     }
 

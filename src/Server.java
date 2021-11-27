@@ -11,6 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Server implements Hello, SessionManager {
 
+    int sessionCounter = 0;
     UserTable users = new UserTable();
 
     public Server() {
@@ -27,7 +28,8 @@ public class Server implements Hello, SessionManager {
         return "Access denied";
     }
     public String getAdminMessage() {
-        return "Welcome to the server. You may create more accounts.";
+        return "Welcome to the server, you may create more accounts.  "
+                + "There have been " + sessionCounter + " connection today.";
     }
     public String getUserMessage(String sessionUsername) {
         return "Hello " + sessionUsername + ". Welcome to the server.";
@@ -52,6 +54,7 @@ public class Server implements Hello, SessionManager {
 
     @Override
     public Session getSession() throws RemoteException {
+        sessionCounter++;
         Session newSession = new SessionImplementation(this, users);
         Session newSessionStub = (Session) UnicastRemoteObject.exportObject(newSession, 0);
         return newSessionStub;
