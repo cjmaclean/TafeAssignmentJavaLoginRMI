@@ -50,7 +50,8 @@ public class Client {
         String host = (args.length < 1) ? null : args[0];
         try {
             Registry registry = LocateRegistry.getRegistry(host);
-            Session sessionStub = (Session) registry.lookup("Session");
+            SessionManager sessionManagerStub = (SessionManager) registry.lookup("SessionManager");
+            Session sessionStub = sessionManagerStub.getSession();
             String response = sessionStub.getMessage();
             System.out.println("response: " + response);
             sessionStub.login("admin", "admin");
