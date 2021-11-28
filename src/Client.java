@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -8,8 +9,18 @@ import java.util.Scanner;
 /**
  *
  * @author Caspian Maclean 30039802
+ *
+ * Question 4 – JMC wishes to have a standard login functionality for all their
+ * terminals around the ship this should be accomplished via logging into a
+ * central server to test user and password combinations (you must have at least
+ * one administrator password setup) You must create a two Server Client
+ * program; each must use two different IPC mechanisms to communicate. Your
+ * program must have a login that uses standard hashing techniques
+ *
+ * This project uses RMI for the connection.
+ * This class is the client program
+ * 
  */
-
 public class Client {
 
     private Client() {
@@ -54,7 +65,7 @@ public class Client {
                 try {
                     System.out.println("Commands: quit / login <user> <pass> / message / create <user> <pass>");
                     System.out.print("Command> ");
-                    
+
                     String lineInput = sc.nextLine();
                     String[] lineInputWords = lineInput.split(" ");
                     if (lineInput.equalsIgnoreCase("quit")) {
@@ -79,7 +90,7 @@ public class Client {
                         System.out.println("command not understood");
                     }
                 } catch (IOException e) {
-                    // handle IO exception here
+                    // Not doing anything to handle IO exception here
                 }
             }
         } catch (RemoteException | NotBoundException e) {

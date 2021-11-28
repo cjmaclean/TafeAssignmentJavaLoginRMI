@@ -6,7 +6,18 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
- * @author 30039802 - Caspian Maclean
+ * @author Caspian Maclean 30039802
+ *
+ * Question 4 – JMC wishes to have a standard login functionality for all their
+ * terminals around the ship this should be accomplished via logging into a
+ * central server to test user and password combinations (you must have at least
+ * one administrator password setup) You must create a two Server Client
+ * program; each must use two different IPC mechanisms to communicate. Your
+ * program must have a login that uses standard hashing techniques
+ *
+ * This project uses RMI for the connection.
+ * This class is the server program
+ * 
  */
 public class Server implements SessionManager {
 
