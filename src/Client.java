@@ -45,10 +45,36 @@ public class Client {
     private Client() {
     }
 
+    private static void test() {
+        String host = null;
+        try {
+            Registry registry = LocateRegistry.getRegistry(host);
+            SessionManager sessionManagerStub = (SessionManager) registry.lookup("SessionManager");
+            Session sessionStub = sessionManagerStub.getSession();
+            String response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+            sessionStub.login("admin", "admin");
+            response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+            sessionStub.login("fred", "ffff");
+            response = sessionStub.getMessage();
+            System.out.println("response: " + response);
+
+        } catch (RemoteException | NotBoundException e) {
+            System.err.println("Client exception: " + e.toString());
+        }
+
+    }
+
     public static void main(String[] args) {
 
+        if ((args.length >= 1) && args[0].equals("test")) {
+            test();
+            return;
+        }
         String host = (args.length < 1) ? null : args[0];
         try {
+            System.out.println("Interactive!!!!!!!!!!!!");
             Registry registry = LocateRegistry.getRegistry(host);
             SessionManager sessionManagerStub = (SessionManager) registry.lookup("SessionManager");
             Session sessionStub = sessionManagerStub.getSession();
