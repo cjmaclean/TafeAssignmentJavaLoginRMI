@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
  *
  * @author 30039802 - Caspian Maclean
  */
-public class Server implements Hello, SessionManager {
+public class Server implements SessionManager {
 
     int sessionCounter = 0;
     UserTable users = new UserTable();
@@ -16,11 +16,6 @@ public class Server implements Hello, SessionManager {
     public Server() {
         users.addUserToTable("fred", "ffff");
         users.addUserToTable("admin", "admin");
-    }
-
-    @Override
-    public String sayHello() {
-        return "Hello, world!";
     }
 
     public String getLoggedOutMessage() {
@@ -33,7 +28,6 @@ public class Server implements Hello, SessionManager {
     public String getUserMessage(String sessionUsername) {
         return "Hello " + sessionUsername + ". Welcome to the server.";
     }
-
     
     public static void main(String args[]) {
 
